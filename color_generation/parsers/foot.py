@@ -34,7 +34,7 @@ def parse_foot_colors(colors):
             foot_colors.write(parse_single_color("regular6", colors["blue"]))
             foot_colors.write(parse_single_color("regular7", colors["bluegrey"]))
 
-            foot_colors.write(parse_single_color("bright0", colors["surfaceContainer"]))
+            foot_colors.write(parse_single_color("bright0", colors["onSurfaceVariant"]))
             foot_colors.write(parse_single_color("bright1", colors["pink"]))
             foot_colors.write(parse_single_color("bright2", colors["lightgreen"]))
             foot_colors.write(parse_single_color("bright3", colors["yellow"]))
