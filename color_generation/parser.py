@@ -31,6 +31,6 @@ with open("../hyprland/colors.conf", "w") as hyprconf, open(
     # iterate over the colors except the first two lines
     for line in lines[2:]:
         # write the color to the hyprland.conf file
-        hyprconf.write("$" + line.replace(" ", " = ") + "\n")
+        hyprconf.write("$" + line.replace(" ", " = ").replace("#", "rgba(") + "ff)\n")
         # write the color to the colors.css file for gtk css
-        gtkcss.write("@define-color " + line.replace(" ", ": ") + ";\n")
+        gtkcss.write("@define-color " + line + ";\n")
