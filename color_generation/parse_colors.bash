@@ -8,4 +8,4 @@ mkdir -p ./.cache
 mkdir -p ../hyprland
 mkdir -p ../gtk
 # generate colors for hyprland
-./parser.py $raw_colors_file_location
+./parse.py $raw_colors_file_location
