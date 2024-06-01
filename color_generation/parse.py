@@ -30,12 +30,15 @@ except FileNotFoundError:
 hyprland_colors_file = "../hyprland/colors.conf"
 gtkCSS_file = "../gtk/colors.css"
 scss_file = "../scss/colors.scss"
+lua_file = "../lua/colors.lua"
 
 try:
     # Now, `lines` is a list where each element is a line from the file
     with open(hyprland_colors_file, "w") as hyprconf, open(
         gtkCSS_file, "w"
-    ) as gtkcss, open(scss_file, "w") as scss:
+    ) as gtkcss, open(scss_file, "w") as scss, open(lua_file, "w") as lua:
+        # prep files for writing
+        lua.write("return {\n")
         # iterate over the colors except the first two lines
         for index, (key, value) in enumerate(colors.items()):
             if index > 1:
@@ -43,8 +46,13 @@ try:
                 hyprconf.write("$" + key + value.replace("#", " = rgba(") + "FF)\n")
                 # write the color to the colors.css file for gtk css
                 gtkcss.write("@define-color " + key + " " + value + ";\n")
+                # write the color to the colors.css file for gtk css
+                lua.write("  " + key + ' = "' + value + '",\n')
+
             # write the color to the colorss.css file for SCSS
             scss.write("$" + key + ": " + value + ";\n")
+        # finish started prep
+        lua.write("}")
 except FileNotFoundError:
     print(f"Error: File(s) '{hyprland_colors_file}/{gtkCSS_file}' not found.")
     sys.exit(1)
