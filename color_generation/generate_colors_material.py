@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import colorsys
 import argparse
 import math
 import json
@@ -121,50 +122,128 @@ if darkmode == True:
     material_colors['successContainer'] = '#374B3E'
     material_colors['onSuccessContainer'] = '#D1E9D6'
 
-    material_colors['red'] = '#EF9A9A'
-    material_colors['pink'] = '#F48FB1'
-    material_colors['purple'] = '#CE93D8'
-    material_colors['deeppurple'] = '#B39DDB'
-    material_colors['indigo'] = '#9FA8DA'
-    material_colors['blue'] = '#90CAF9'
-    material_colors['lightblue'] = '#81D4FA'
-    material_colors['cyan'] = '#80DEEA'
-    material_colors['teal'] = '#80CBC4'
-    material_colors['green'] = '#A5D6A7'
-    material_colors['lightgreen'] = '#C5E1A5'
-    material_colors['lime'] = '#E6EE9C'
-    material_colors['yellow'] = '#FFF59D'
-    material_colors['amber'] = '#FFE082'
-    material_colors['orange'] = '#FFCC80'
-    material_colors['deeporange'] = '#FFAB91'
-    material_colors['brown'] = '#BCAAA4'
-    material_colors['grey'] = '#EEEEEE'
-    material_colors['bluegrey'] = '#B0BEC5'
 else:
     material_colors['success'] = '#4F6354'
     material_colors['onSuccess'] = '#FFFFFF'
     material_colors['successContainer'] = '#D1E8D5'
     material_colors['onSuccessContainer'] = '#0C1F13'
 
-    material_colors['red'] = '#F44336'
-    material_colors['pink'] = '#E91E63'
-    material_colors['purple'] = '#9C27B0'
-    material_colors['deeppurple'] = '#673AB7'
-    material_colors['indigo'] = '#3F51B5'
-    material_colors['blue'] = '#2196F3'
-    material_colors['lightblue'] = '#03A9F4'
-    material_colors['cyan'] = '#00BCD4'
-    material_colors['teal'] = '#009688'
-    material_colors['green'] = '#4CAF50'
-    material_colors['lightgreen'] = '#8BC34A'
-    material_colors['lime'] = '#CDDC39'
-    material_colors['yellow'] = '#FFEB3B'
-    material_colors['amber'] = '#FFC107'
-    material_colors['orange'] = '#FF9800'
-    material_colors['deeporange'] = '#F4511E'
-    material_colors['brown'] = '#795548'
-    material_colors['grey'] = '#9E9E9E'
-    material_colors['bluegrey'] = '#607D8B'
+
+# Extended colors around spectrum
+# Predefined colors with their corresponding hue values
+preset_color_angles = {
+    'red': 0,
+    'darkorange': 18,
+    'orange': 36,
+    'gold': 54,
+    'lime': 72,
+    'chartreuse': 90,
+    'limegreen': 108,
+    'springgreen': 126,
+    'mediumspringgreen': 144,
+    'mediumaquamarine': 162,
+    'cyan': 180,
+    'deepskyblue': 198,
+    'royalblue': 216,
+    'blue': 234,
+    'purple': 252,
+    'mediumpurple': 270,
+    'orchid': 288,
+    'fuchsia': 306,
+    'deeppink': 324,
+    'crimson': 342
+}
+
+
+preset_color_names = list(preset_color_angles.keys())
+
+
+def hex_to_rgb(hex_color):
+    """Convert a HEX color string to an RGB tuple."""
+    hex_color = hex_color.lstrip("#")
+    return tuple(int(hex_color[i : i + 2], 16) / 255.0 for i in (0, 2, 4))
+
+
+def rgb_to_hex(rgb):
+    """Convert an RGB color tuple to a HEX string."""
+    return "#{:02x}{:02x}{:02x}".format(
+        int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
+    )
+
+
+def nearest_color(input_color):
+    input_hue = hex_to_hue(input_color)
+    min_difference = float("inf")
+    nearest = None
+    color_set = set(preset_color_angles.keys())  # Convert keys to set for faster lookup
+    for color in color_set:
+        hue = preset_color_angles[color]
+        difference = abs(input_hue - hue)
+        if difference < min_difference:
+            min_difference = difference
+            nearest = color
+    return nearest
+
+
+def generate_colors(base_color, nearest_color_name, step):
+    """Generate a list of colors by shifting hue of the base color by step degrees."""
+    colors = {}
+    index = preset_color_names.index(nearest_color_name)
+    no_of_colors = len(preset_color_names)
+    for angle in range(0, 360, step):
+        new_color = shift_hue(base_color, angle)
+        colors[preset_color_names[index % no_of_colors]] = rgb_to_hex(new_color)
+        index += 1
+    return colors
+
+
+def shift_hue(color, angle):
+    """Shift the hue of a given RGB color by a specified angle in degrees."""
+    r, g, b = color
+    # Convert RGB to HSV
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)
+    # Shift hue by the specified angle
+    h = (h + angle / 360.0) % 1.0
+    # Convert back to RGB
+    r, g, b = colorsys.hsv_to_rgb(h, s, v)
+    return (r, g, b)
+
+
+def hex_to_hue(hex_color):
+    hex_color = hex_color.lstrip("#")
+    r, g, b = tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
+    r /= 255
+    g /= 255
+    b /= 255
+    max_val = max(r, g, b)
+    min_val = min(r, g, b)
+    if max_val == min_val:
+        return 0
+    delta = max_val - min_val
+    hue = 0
+    if max_val == r:
+        hue = 60 * (((g - b) / delta) % 6)
+    elif max_val == g:
+        hue = 60 * (((b - r) / delta) + 2)
+    else:
+        hue = 60 * (((r - g) / delta) + 4)
+    return round(hue)
+
+
+# Input base color in HEX
+base_color_hex = material_colors["primary"]
+nearest_color_name = nearest_color(base_color_hex)
+
+# Convert base color from HEX to RGB
+base_color_rgb = hex_to_rgb(base_color_hex)
+
+# Generate colors with a step of 360 degrees / number of colors
+spectrum_colors = generate_colors(
+    base_color_rgb, nearest_color_name, step=360 // len(preset_color_names)
+)
+
+# add created spectrum colors to the material colors
+material_colors.update(spectrum_colors)
 
 # Terminal Colors
 if args.termscheme is not None:

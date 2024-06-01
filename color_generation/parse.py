@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
+from pathlib import Path
+from parsers.terminal import parse_terminal_colors
 from parsers.foot import parse_foot_colors
 
 # Check if the script received the correct number of arguments
@@ -27,10 +29,10 @@ except FileNotFoundError:
     sys.exit(1)
 
 
-hyprland_colors_file = "../hyprland/colors.conf"
-gtkCSS_file = "../gtk/colors.css"
-scss_file = "../scss/colors.scss"
-lua_file = "../lua/colors.lua"
+hyprland_colors_file = Path("../hyprland/colors.conf")
+gtkCSS_file = Path("../gtk/colors.css")
+scss_file = Path("../scss/colors.scss")
+lua_file = Path("../lua/colors.lua")
 
 try:
     # Now, `lines` is a list where each element is a line from the file
@@ -58,3 +60,4 @@ except FileNotFoundError:
     sys.exit(1)
 
 # parse_foot_colors(colors)
+parse_terminal_colors(colors)
