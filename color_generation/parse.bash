@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 term_alpha=100 # Set this to < 100 to make all your terminals transparent
-sequences_file='.cache/terminal/sequences.txt'
+sequences_file='../terminal/sequences.txt'
 
 apply_term() {
 	# Check if terminal escape sequence template exists
