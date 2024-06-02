@@ -21,7 +21,7 @@ argb_to_hex = lambda argb: "#{:02X}{:02X}{:02X}".format(*map(round, rgba_from_ar
 hex_to_argb = lambda hex_code: argb_from_rgb(int(hex_code[1:3], 16), int(hex_code[3:5], 16), int(hex_code[5:], 16))
 display_color = lambda rgba : "\x1B[38;2;{};{};{}m{}\x1B[0m".format(rgba[0], rgba[1], rgba[2], "\x1b[7m   \x1b[7m")
 
-def calculate_optimal_size (width: int, height: int, bitmap_size: int) -> (int, int):
+def calculate_optimal_size (width: int, height: int, bitmap_size: int):
     image_area = width * height;
     bitmap_area = bitmap_size ** 2
     scale = math.sqrt(bitmap_area/image_area) if image_area > bitmap_area else 1
@@ -154,13 +154,15 @@ def generate_color_material(
     darkmode = (mode == 'dark')
     transparent = (transparency == 'transparent')
 
+    hct = Hct.from_int(0xffffffff)
+
     if path is not None:
         image = Image.open(os.path.expanduser(path))
         wsize, hsize = image.size
         wsize_new, hsize_new = calculate_optimal_size(wsize, hsize, size)
         if wsize_new < wsize or hsize_new < hsize:
             image = image.resize((wsize_new, hsize_new), Image.Resampling.BICUBIC)
-        colors = QuantizeCelebi(list(image.getdata()), 128)
+        colors = QuantizeCelebi(image.getdata(), 128)
         argb = Score.score(colors)[0]
 
         if cache is not None:
@@ -195,7 +197,7 @@ def generate_color_material(
     else:
         from materialyoucolor.scheme.scheme_vibrant import SchemeVibrant as Scheme
 
-# Generate
+    # Generate
     scheme = Scheme(hct, darkmode, 0.0)
 
     material_colors = {}
@@ -210,7 +212,7 @@ def generate_color_material(
             rgba = color_name.get_hct(scheme).to_rgba()
             material_colors[color] = rgba_to_hex(rgba)
 
-# Extended material
+    # Extended material
     if darkmode == True:
         material_colors['success'] = '#B5CCBA'
         material_colors['onSuccess'] = '#213528'
@@ -261,35 +263,34 @@ def generate_color_material(
 
     material_colors.update(term_colors)
 
-
-    if debug == False and print == True:
-        print(f"darkmode {darkmode}")
-        print(f"transparent {transparent}")
-        for color, code in material_colors.items():
-            print(f"{color} {code}")
-        for color, code in term_colors.items():
-            print(f"{color} {code}")
-    elif print == True:
-        if path is not None:
-            print('\n--------------Image properties-----------------')
-            print(f"Image size: {wsize} x {hsize}")
-            print(f"Resized image: {wsize_new} x {hsize_new}")
-        print('\n---------------Selected color------------------')
-        print(f"Dark mode: {darkmode}")
-        print(f"Scheme: {scheme}")
-        print(f"Accent color: {display_color(rgba_from_argb(argb))} {argb_to_hex(argb)}")
-        print(f"HCT: {hct.hue:.2f}  {hct.chroma:.2f}  {hct.tone:.2f}")
-        print('\n---------------Material colors-----------------')
-        for color, code in material_colors.items():
-            rgba = rgba_from_argb(hex_to_argb(code))
-            print(f"{color.ljust(32)} : {display_color(rgba)}  {code}")
-        print('\n----------Harmonize terminal colors------------')
-        for color, code in term_colors.items():
-            rgba = rgba_from_argb(hex_to_argb(code))
-            code_source = term_source_colors[color]
-            rgba_source = rgba_from_argb(hex_to_argb(code_source))
-            print(f"{color.ljust(6)} : {display_color(rgba_source)} {code_source} --> {display_color(rgba)} {code}")
-        print('-----------------------------------------------')
+    # if debug == False and print == True:
+    #     print(f"darkmode {darkmode}")
+    #     print(f"transparent {transparent}")
+    #     for color, code in material_colors.items():
+    #         print(f"{color} {code}")
+    #     for color, code in term_colors.items():
+    #         print(f"{color} {code}")
+    # elif print == True:
+    #     if path is not None:
+    #         print('\n--------------Image properties-----------------')
+    #         print(f"Image size: {wsize} x {hsize}")
+    #         print(f"Resized image: {wsize_new} x {hsize_new}")
+    #     print('\n---------------Selected color------------------')
+    #     print(f"Dark mode: {darkmode}")
+    #     print(f"Scheme: {scheme}")
+    #     print(f"Accent color: {display_color(rgba_from_argb(argb))} {argb_to_hex(argb)}")
+    #     print(f"HCT: {hct.hue:.2f}  {hct.chroma:.2f}  {hct.tone:.2f}")
+    #     print('\n---------------Material colors-----------------')
+    #     for color, code in material_colors.items():
+    #         rgba = rgba_from_argb(hex_to_argb(code))
+    #         print(f"{color.ljust(32)} : {display_color(rgba)}  {code}")
+    #     print('\n----------Harmonize terminal colors------------')
+    #     for color, code in term_colors.items():
+    #         rgba = rgba_from_argb(hex_to_argb(code))
+    #         code_source = term_source_colors[color]
+    #         rgba_source = rgba_from_argb(hex_to_argb(code_source))
+    #         print(f"{color.ljust(6)} : {display_color(rgba_source)} {code_source} --> {display_color(rgba)} {code}")
+    #     print('-----------------------------------------------')
 
     return material_colors
 

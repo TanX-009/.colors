@@ -9,7 +9,7 @@ from generators.misc import generate_misc_colors
 
 def main(args):
     if args.generate_all:
-        colors = generate_raw_colors(True)
+        colors = generate_raw_colors("~/.wallpapers/manga.png", file=True)
         generate_terminal_colors(colors)
         generate_misc_colors(colors, "../gtk/colors.css", "@define-color $__$ #__#;")
         generate_misc_colors(
