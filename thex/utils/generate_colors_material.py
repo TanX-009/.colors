@@ -38,6 +38,7 @@ hex_to_argb = lambda hex_code: argb_from_rgb(
 display_color = lambda rgba: "\x1B[38;2;{};{};{}m{}\x1B[0m".format(
     rgba[0], rgba[1], rgba[2], "\x1b[7m   \x1b[7m"
 )
+rgb_to_luminance = lambda rgb: 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
 
 
 def calculate_optimal_size(width: int, height: int, bitmap_size: int):
@@ -69,6 +70,14 @@ def harmonize(
 def boost_chroma_tone(argb: int, chroma: float = 1, tone: float = 1) -> int:
     hct = Hct.from_int(argb)
     return Hct.from_hct(hct.hue, hct.chroma * chroma, hct.tone * tone).to_int()
+
+
+def lighten_if_dark(rgb_color, threshold, factor):
+    luminance = rgb_to_luminance(rgb_color)
+    if luminance < threshold:
+        lightened_rgb = tuple(min(c + (1.0 - c) * factor, 1.0) for c in rgb_color)
+        return lightened_rgb
+    return rgb_color
 
 
 # Predefined colors with their corresponding hue values
@@ -113,18 +122,6 @@ def nearest_color(input_color):
     return nearest
 
 
-def generate_colors(base_color, nearest_color_name, step):
-    """Generate a list of colors by shifting hue of the base color by step degrees."""
-    colors = {}
-    index = preset_color_names.index(nearest_color_name)
-    no_of_colors = len(preset_color_names)
-    for angle in range(0, 360, step):
-        new_color = shift_hue(base_color, angle)
-        colors[preset_color_names[index % no_of_colors]] = rgb_to_hex(new_color)
-        index += 1
-    return colors
-
-
 def shift_hue(color, angle):
     """Shift the hue of a given RGB color by a specified angle in degrees."""
     r, g, b = color
@@ -156,6 +153,20 @@ def hex_to_hue(hex_color):
     else:
         hue = 60 * (((r - g) / delta) + 4)
     return round(hue)
+
+
+def generate_colors(base_color, nearest_color_name, step):
+    """Generate a list of colors by shifting hue of the base color by step degrees."""
+    colors = {}
+    index = preset_color_names.index(nearest_color_name)
+    no_of_colors = len(preset_color_names)
+    for angle in range(0, 360, step):
+        new_color = shift_hue(base_color, angle)
+        # lighten the color if it's dark
+        new_color = lighten_if_dark(new_color, 127, 0.45)
+        colors[preset_color_names[index % no_of_colors]] = rgb_to_hex(new_color)
+        index += 1
+    return colors
 
 
 def generate_color_material(
