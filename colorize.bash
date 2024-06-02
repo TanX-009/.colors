@@ -1,29 +1,12 @@
 #!/bin/bash
 
-wall="$HOME/.wallpapers/pixel_big_city.png"
+mkdir -p .cache
+wall="$1"
 
-swaybg -m fill -i "$wall" &
+cd thex || exit
+python3 main.py -G -i "$wall"
+cd ..
 
-raw_colors_file_location='./.cache/raw_colors_material.txt'
-
-mkdir -p ./.cache
-./generate_colors_material.py --path "$wall" \
-	--termscheme ./templates/scheme-base.json \
-	--term_fg_boost 0.1 \
-	--mode 'dark' \
-	--blend_bg_fg \
-	>$raw_colors_file_location
-
-mkdir -p ../hyprland
-mkdir -p ../gtk
-mkdir -p ../foot
-mkdir -p ../scss
-mkdir -p ../lua
-mkdir -p ../terminal
-# generate colors and aply using python
-./parse.py $raw_colors_file_location
-
-# generate colors and apply using bash
-# ./parse.bash
-
-~/.dotfiles.config/.scripts/misc/launch-waybar.sh
+~/.dotfiles.config/.scripts/misc/launch-waybar.sh >.cache/waybar.log 2>&1
+~/.dotfiles.config/.scripts/misc/launch-swaybg.sh "$wall" >.cache/swaybg.log 2>&1
+~/.dotfiles.config/.scripts/misc/apply-ptm.sh >.cache/terminal.log 2>&1

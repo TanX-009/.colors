@@ -7,3 +7,4 @@
 thex/.cache
 
 **/__pycache__/
+.cache
