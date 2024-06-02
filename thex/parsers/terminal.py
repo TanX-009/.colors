@@ -2,10 +2,8 @@ import re
 from pathlib import Path
 import shutil
 
-term_alpha = 100  # Set this to < 100 to make all your terminals transparent
 
-
-def parse_terminal_colors(colors):
+def parse_terminal_colors(colors, alpha=100):
     sequences_file = Path("../terminal/sequences.txt")
     template_file = Path("templates/sequences.txt")
 
@@ -23,7 +21,7 @@ def parse_terminal_colors(colors):
     for key, value in colors.items():
         sequences_content = sequences_content.replace(f"${key} #", value.lstrip("#"))
 
-    sequences_content = sequences_content.replace("$alpha", str(term_alpha))
+    sequences_content = sequences_content.replace("$alpha", str(alpha))
 
     with open(sequences_file, "w") as file:
         file.write(sequences_content)

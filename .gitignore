@@ -1,9 +1,9 @@
+/gtk
+/hyprland
+/foot
+/scss
+/lua
+/terminal
+thex/.cache
+
 **/__pycache__/
-color_generation/.cache
-gtk
-hyprland
-foot
-scss
-lua
-terminal
-src/.cache

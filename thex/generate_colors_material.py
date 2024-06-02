@@ -28,6 +28,8 @@ parser.add_argument('--cache', type=str, default=None, help='file path to store 
 parser.add_argument('--debug', action='store_true', default=False, help='debug mode')
 args = parser.parse_args()
 
+hex_to_rgb = lambda hex_color: tuple(int(hex_color.lstrip("#")[i:i+2], 16) / 255.0 for i in (0, 2, 4))
+rgb_to_hex = lambda rgb: "#{:02x}{:02x}{:02x}".format(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
 rgba_to_hex = lambda rgba: "#{:02X}{:02X}{:02X}".format(rgba[0], rgba[1], rgba[2])
 argb_to_hex = lambda argb: "#{:02X}{:02X}{:02X}".format(*map(round, rgba_from_argb(argb)))
 hex_to_argb = lambda hex_code: argb_from_rgb(int(hex_code[1:3], 16), int(hex_code[3:5], 16), int(hex_code[5:], 16))
@@ -156,19 +158,6 @@ preset_color_angles = {
 
 
 preset_color_names = list(preset_color_angles.keys())
-
-
-def hex_to_rgb(hex_color):
-    """Convert a HEX color string to an RGB tuple."""
-    hex_color = hex_color.lstrip("#")
-    return tuple(int(hex_color[i : i + 2], 16) / 255.0 for i in (0, 2, 4))
-
-
-def rgb_to_hex(rgb):
-    """Convert an RGB color tuple to a HEX string."""
-    return "#{:02x}{:02x}{:02x}".format(
-        int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
-    )
 
 
 def nearest_color(input_color):

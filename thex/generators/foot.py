@@ -7,7 +7,7 @@ def parse_single_color(key, value):
     return f"{key}={value.replace('#', '')}\n"
 
 
-def parse_foot_colors(colors):
+def generate_foot_colors(colors):
     foot_colors_file = "../foot/colors"
     try:
         with open(foot_colors_file, "w") as foot_colors:
