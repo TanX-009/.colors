@@ -36,6 +36,15 @@ def main(args, parser):
         generate_misc_colors(colors, "../scss/colors.scss", "$$__$: #__#;", True, True)
         # generate gradience colors
         generate_gradience_colors(colors)
+        # generate rasi colors
+        generate_misc_colors(
+            colors,
+            "../rasi/colors.rasi",
+            "  $__$ : #__#;",
+            pre="* {",
+            post="}",
+            removeUnderscore=True,
+        )
         # generate icons
         generate_icons(colors)
 

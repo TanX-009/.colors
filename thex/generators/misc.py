@@ -12,6 +12,7 @@ def generate_misc_colors(
     name_id="$__$",
     value_id="#__#",
     replace_hash=None,
+    removeUnderscore=False,
 ):
     file_path = Path(path)
     Path(file_path).parent.mkdir(parents=True, exist_ok=True)
@@ -31,6 +32,8 @@ def generate_misc_colors(
                 if write:
                     if replace_hash is not None:
                         value = value.replace("#", replace_hash)
+                    if removeUnderscore:
+                        name = name.replace("_", "")
                     file.write(
                         template.replace(name_id, name).replace(value_id, str(value))
                         + "\n"
