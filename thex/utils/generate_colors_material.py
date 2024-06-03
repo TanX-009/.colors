@@ -75,6 +75,7 @@ def boost_chroma_tone(argb: int, chroma: float = 1, tone: float = 1) -> int:
 def lighten_if_dark(rgb_color, threshold, factor):
     luminance = rgb_to_luminance(rgb_color)
     if luminance < threshold:
+        factor = threshold-luminance
         lightened_rgb = tuple(min(c + (1.0 - c) * factor, 1.0) for c in rgb_color)
         return lightened_rgb
     return rgb_color
@@ -163,7 +164,7 @@ def generate_colors(base_color, nearest_color_name, step):
     for angle in range(0, 360, step):
         new_color = shift_hue(base_color, angle)
         # lighten the color if it's dark
-        new_color = lighten_if_dark(new_color, 127, 0.45)
+        new_color = lighten_if_dark(new_color, 0.7, 0.45)
         colors[preset_color_names[index % no_of_colors]] = rgb_to_hex(new_color)
         index += 1
     return colors

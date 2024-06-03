@@ -5,6 +5,8 @@ import sys
 from generators.raw import generate_raw_colors
 from generators.terminal import generate_terminal_colors
 from generators.misc import generate_misc_colors
+from generators.gradience import generate_gradience_colors
+from generators.icons import generate_icons
 
 
 def main(args, parser):
@@ -32,6 +34,10 @@ def main(args, parser):
         )
         # generate scss colors
         generate_misc_colors(colors, "../scss/colors.scss", "$$__$: #__#;", True, True)
+        # generate gradience colors
+        generate_gradience_colors(colors)
+        # generate icons
+        generate_icons(colors)
 
 
 if __name__ == "__main__":
