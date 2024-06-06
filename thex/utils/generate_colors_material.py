@@ -200,7 +200,9 @@ def generate_color_material(
         wsize_new, hsize_new = calculate_optimal_size(wsize, hsize, size)
         if wsize_new < wsize or hsize_new < hsize:
             image = image.resize((wsize_new, hsize_new), Image.Resampling.BICUBIC)
-        colors = QuantizeCelebi(image.getdata(), 128)
+
+        img_data = list( image.getdata() )
+        colors = QuantizeCelebi(img_data, 128)
         argb = Score.score(colors)[0]
 
         if cache is not None:

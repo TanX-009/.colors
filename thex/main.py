@@ -12,7 +12,7 @@ from generators.icons import generate_icons
 def main(args, parser):
     if args.generate_all:
         if args.image:
-            colors = generate_raw_colors(args.image, file=True)
+            colors = generate_raw_colors(args.image, mode="light", file=True)
         elif args.color:
             colors = generate_raw_colors(color=args.color, file=True)
         else:
