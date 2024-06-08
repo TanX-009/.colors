@@ -3,7 +3,7 @@ import shutil
 
 
 def generate_gradience_colors(colors):
-    preset_file = Path("../gtk/preset.json")
+    preset_file = Path("../generated/gtk/preset.json")
     template_file = Path("templates/gradience/preset.json")
 
     if not Path(template_file).is_file():
@@ -22,13 +22,3 @@ def generate_gradience_colors(colors):
 
     with open(preset_file, "w") as file:
         file.write(preset_content)
-
-
-# # Copy template
-# mkdir -p "$CACHE_DIR"/user/generated/gradience
-# cp "scripts/templates/gradience/preset.json" "$CACHE_DIR"/user/generated/gradience/preset.json
-#
-# # Apply colors
-# for i in "${!colorlist[@]}"; do
-#     sed -i "s/{{ ${colorlist[$i]} }}/${colorvalues[$i]}/g" "$CACHE_DIR"/user/generated/gradience/preset.json
-# done

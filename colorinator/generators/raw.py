@@ -15,12 +15,14 @@ def generate_raw_colors(
         mode=mode,
         scheme=scheme,
         termscheme="templates/terminal/scheme-base.json",
-        term_fg_boost=0.1,
+        term_fg_boost=0.2,
         blend_bg_fg=True,
     )
 
     if file:
-        cache_dir = ".cache"
+        # Update the cache path to $HOME/.cache
+        cache_dir = os.path.expanduser("~/.cache")
+
         # Create the directory if it doesn't exist
         os.makedirs(cache_dir, exist_ok=True)
         raw_colors_material_path = os.path.join(cache_dir, "raw_colors_material.txt")

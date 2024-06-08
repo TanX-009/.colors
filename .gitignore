@@ -1,14 +1,2 @@
-/gtk
-/hyprland
-/foot
-/scss
-/lua
-/terminal
-thex/.cache
-
 **/__pycache__/
-.cache
-/icons
-rasi
-rasi
-rasi
+/generated

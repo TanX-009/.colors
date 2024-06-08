@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import os
 import sys
 
 from generators.raw import generate_raw_colors
@@ -8,13 +9,16 @@ from generators.misc import generate_misc_colors
 from generators.gradience import generate_gradience_colors
 from generators.icons import generate_icons
 
+# TO-DO
+# Add arg -g, --generate "list, of, colors, to, generate"
+
 
 def main(args, parser):
     if args.generate_all:
         if args.image:
-            colors = generate_raw_colors(args.image, mode="light", file=True)
+            colors = generate_raw_colors(args.image, mode=args.mode, file=True)
         elif args.color:
-            colors = generate_raw_colors(color=args.color, file=True)
+            colors = generate_raw_colors(color=args.color, mode=args.mode, file=True)
         else:
             print("No color or image provided")
             parser.print_usage()
@@ -23,23 +27,34 @@ def main(args, parser):
         # generate terminal colors
         generate_terminal_colors(colors)
         # generate gtkcss colors
-        generate_misc_colors(colors, "../gtk/colors.css", "@define-color $__$ #__#;")
+        generate_misc_colors(
+            colors, "../generated/gtk/colors.css", "@define-color $__$ #__#;"
+        )
         # generate neovim colors
         generate_misc_colors(
-            colors, "../lua/colors.lua", '  $__$ = "#__#",', pre="return {", post="}"
+            colors,
+            "../generated/lua/colors.lua",
+            '  $__$ = "#__#",',
+            pre="return {",
+            post="}",
         )
         # generate hyprland colors
         generate_misc_colors(
-            colors, "../hyprland/colors.conf", "$$__$ = #__#ff)", replace_hash="rgba("
+            colors,
+            "../generated/hyprland/colors.conf",
+            "$$__$ = #__#ff)",
+            replace_hash="rgba(",
         )
         # generate scss colors
-        generate_misc_colors(colors, "../scss/colors.scss", "$$__$: #__#;", True, True)
+        generate_misc_colors(
+            colors, "../generated/scss/colors.scss", "$$__$: #__#;", True, True
+        )
         # generate gradience colors
         generate_gradience_colors(colors)
         # generate rasi colors
         generate_misc_colors(
             colors,
-            "../rasi/colors.rasi",
+            "../generated/rasi/colors.rasi",
             "  $__$ : #__#;",
             pre="* {",
             post="}",
@@ -70,6 +85,13 @@ if __name__ == "__main__":
         "--color",
         type=str,
         help="Color to use if generating colors from an color",
+    )
+    parser.add_argument(
+        "-m",
+        "--mode",
+        type=str,
+        default="dark",
+        help="Theme mode (light, dark), default dark",
     )
 
     args = parser.parse_args()

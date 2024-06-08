@@ -8,7 +8,7 @@ def parse_single_color(key, value):
 
 
 def generate_foot_colors(colors):
-    foot_colors_file = "../foot/colors"
+    foot_colors_file = "../generated/foot/colors"
     try:
         with open(foot_colors_file, "w") as foot_colors:
             foot_colors.write("# -*- conf -*-\n")

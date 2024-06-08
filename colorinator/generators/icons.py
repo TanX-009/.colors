@@ -4,7 +4,7 @@ import os
 
 def generate_icons(colors):
     directory = Path("templates/icons")
-    output_directory = Path("../icons")
+    output_directory = Path("../generated/icons")
 
     Path(output_directory).mkdir(parents=True, exist_ok=True)
 

@@ -3,7 +3,7 @@ import shutil
 
 
 def generate_terminal_colors(colors, alpha=100):
-    sequences_file = Path("../terminal/sequences.txt")
+    sequences_file = Path("../generated/terminal/sequences.txt")
     template_file = Path("templates/terminal/sequences.txt")
 
     if not Path(template_file).is_file():
