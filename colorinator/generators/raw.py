@@ -21,7 +21,7 @@ def generate_raw_colors(
 
     if file:
         # Update the cache path to $HOME/.cache
-        cache_dir = os.path.expanduser("~/.cache")
+        cache_dir = os.path.expanduser("~/.cache/colorinator")
 
         # Create the directory if it doesn't exist
         os.makedirs(cache_dir, exist_ok=True)
