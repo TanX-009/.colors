@@ -7,7 +7,7 @@ def generate_gradience_colors(colors):
     template_file = Path("templates/gradience/preset.json")
 
     if not Path(template_file).is_file():
-        print("Template file not found for Terminal. Skipping that.")
+        print("Template file not found for Gradience. Skipping that.")
         return
 
     Path(preset_file).parent.mkdir(parents=True, exist_ok=True)

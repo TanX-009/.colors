@@ -154,10 +154,10 @@ log "Generating..."
 
 # Generate colors
 if [ -n "$wall" ] || [ -n "$directory" ]; then
-	python3 main.py -G -i "$wall" -m "$mode" >"$CACHE_DIR"/thex.log 2>&1
+	python3 main.py -G -i "$wall" -m "$mode" >"$CACHE_DIR"/colorinator.log 2>&1
 	echo "$mode|$wall" >"$RECORD_FILE"
 elif [ -n "$hexcolor" ]; then
-	python3 main.py -G -c "$hexcolor" -m "$mode" >"$CACHE_DIR"/thex.log 2>&1
+	python3 main.py -G -c "$hexcolor" -m "$mode" >"$CACHE_DIR"/colorinator.log 2>&1
 fi
 
 log "Relaunching..."

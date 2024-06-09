@@ -3,6 +3,7 @@ import argparse
 import os
 import sys
 
+from generators.kvantum import generate_kvantum_colors
 from generators.raw import generate_raw_colors
 from generators.terminal import generate_terminal_colors
 from generators.misc import generate_misc_colors
@@ -51,6 +52,8 @@ def main(args, parser):
         )
         # generate gradience colors
         generate_gradience_colors(colors)
+        # generate kvantum colors
+        generate_kvantum_colors(colors)
         # generate rasi colors
         generate_misc_colors(
             colors,
