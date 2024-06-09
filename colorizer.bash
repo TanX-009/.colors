@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "█▀▀ █▀█ █░░ █▀█ █▀█ █ █▄░█ ▄▀█ ▀█▀ █▀█ █▀█ █"
+echo "█▄▄ █▄█ █▄▄ █▄█ █▀▄ █ █░▀█ █▀█ ░█░ █▄█ █▀▄ ▄"
+
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 CACHE_DIR="$HOME/.cache/colorinator"
 RECORD_FILE="$SCRIPT_DIR/generated/record"
@@ -24,6 +27,14 @@ relaunch_only=false
 wallpaper=""
 hexcolor=""
 directory=""
+
+log() {
+	echo "LOG: $1"
+}
+
+error() {
+	echo "ERROR: $1"
+}
 
 # Function to display help
 show_help() {
@@ -84,6 +95,7 @@ done
 
 # if relaunch only relaunch with previous values
 if $relaunch_only; then
+	log "Relaunching without changes..."
 	~/.scripts/reload/reload.bash -w "$prev_wall" -m "$prev_mode"
 	exit 0
 fi
@@ -101,26 +113,28 @@ elif [ -n "$directory" ]; then
 	if [ -n "$random_wallpaper" ]; then
 		wall=$(realpath "$random_wallpaper")
 	else
-		echo "Error: Random selected wallpaper \"$wall\" doesn't exist!"
+		error "Random selected wallpaper \"$wall\" doesn't exist!"
 	fi
+fi
+
+if [ -n "$wall" ]; then
+	log "Selected wallpaper: $wall"
 fi
 
 # Determine mode automatically if automode is set
 if [[ $automode == true ]] && [[ -z "$wallpaper" ]] && [[ -z $directory ]]; then
-	echo "Error: can't pass -M|--automode flag without passing wallpaper or directory path!"
+	error "Can't pass -M|--automode flag without passing wallpaper or directory path!"
 	show_help
 	exit 1
 elif [[ $automode == true ]]; then
 	if [ -x "$SCRIPT_DIR/utils/isDark.bash" ]; then
 		mode=$("$SCRIPT_DIR/utils/isDark.bash" "$wall")
+		log "$mode detected"
 	else
-		echo "Error: isDark.bash not found or isn't executable!"
+		error "isDark.bash not found or isn't executable!"
 		exit 1
 	fi
 fi
-
-# Create cache directory
-mkdir -p "$CACHE_DIR"
 
 # Navigate to script directory
 cd "$SCRIPT_DIR"/colorinator || exit
@@ -132,7 +146,11 @@ if $switchmode; then
 		mode="light"
 	fi
 	wall=$prev_wall
+	log "Switching to $mode mode"
+	log "Using previous set wallpaper: $wall"
 fi
+
+log "Generating..."
 
 # Generate colors
 if [ -n "$wall" ] || [ -n "$directory" ]; then
@@ -141,6 +159,8 @@ if [ -n "$wall" ] || [ -n "$directory" ]; then
 elif [ -n "$hexcolor" ]; then
 	python3 main.py -G -c "$hexcolor" -m "$mode" >"$CACHE_DIR"/thex.log 2>&1
 fi
+
+log "Relaunching..."
 
 # Launch or reload necessary components
 ~/.scripts/reload/reload.bash -w "$wall" -m "$mode"
