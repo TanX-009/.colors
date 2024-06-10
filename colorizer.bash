@@ -24,6 +24,7 @@ mode=$prev_mode
 automode=false
 switchmode=false
 relaunch_only=false
+launch_only=false
 wallpaper=""
 hexcolor=""
 directory=""
@@ -70,6 +71,10 @@ while [[ $# -gt 0 ]]; do
 		relaunch_only=true
 		shift
 		;;
+	-l | --launch)
+		launch_only=true
+		shift
+		;;
 	-w | --wallpaper)
 		wallpaper="$2"
 		shift 2
@@ -96,7 +101,14 @@ done
 # if relaunch only relaunch with previous values
 if $relaunch_only; then
 	log "Relaunching without changes..."
-	~/.scripts/reload/reload.bash -w "$prev_wall" -m "$prev_mode"
+	~/.scripts/loadreload/__main__.bash -w "$prev_wall" -m "$prev_mode"
+	exit 0
+fi
+
+# if launch only relaunch with previous values
+if $launch_only; then
+	log "Launching..."
+	~/.scripts/loadreload/__main__.bash -w "$prev_wall" -m "$prev_mode" -l
 	exit 0
 fi
 
@@ -163,4 +175,4 @@ fi
 log "Relaunching..."
 
 # Launch or reload necessary components
-~/.scripts/reload/reload.bash -w "$wall" -m "$mode"
+~/.scripts/loadreload/__main__.bash -w "$wall" -m "$mode"
