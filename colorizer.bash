@@ -9,6 +9,7 @@ RECORD_FILE="$SCRIPT_DIR/generated/record"
 
 # Create the cache directory
 mkdir -p "$CACHE_DIR"
+mkdir -p "$SCRIPT_DIR/generated"
 
 # Create and echo empty values in RECORD_FILE
 if [ ! -f "$RECORD_FILE" ]; then
