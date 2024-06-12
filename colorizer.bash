@@ -1,20 +1,23 @@
 #!/bin/bash
 
-echo "█▀▀ █▀█ █░░ █▀█ █▀█ █ █▄░█ ▄▀█ ▀█▀ █▀█ █▀█ █"
-echo "█▄▄ █▄█ █▄▄ █▄█ █▀▄ █ █░▀█ █▀█ ░█░ █▄█ █▀▄ ▄"
-
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 CACHE_DIR="$HOME/.cache/colorinator"
 RECORD_FILE="$SCRIPT_DIR/generated/record"
+LOG_FILE="$CACHE_DIR/colorizer.log"
+# clear log file
+true >"$LOG_FILE"
+
+echo "█▀▀ █▀█ █░░ █▀█ █▀█ █ █▄░█ ▄▀█ ▀█▀ █▀█ █▀█ █" | tee -a "$LOG_FILE"
+echo "█▄▄ █▄█ █▄▄ █▄█ █▀▄ █ █░▀█ █▀█ ░█░ █▄█ █▀▄ ▄" | tee -a "$LOG_FILE"
 
 # Create the cache directory
-mkdir -p "$CACHE_DIR"
-mkdir -p "$SCRIPT_DIR/generated"
+mkdir -p "$CACHE_DIR" | tee -a "$LOG_FILE"
+mkdir -p "$SCRIPT_DIR/generated" | tee -a "$LOG_FILE"
 
 # Create and echo empty values in RECORD_FILE
 if [ ! -f "$RECORD_FILE" ]; then
-	touch "$RECORD_FILE"
-	echo "dark|" >"$RECORD_FILE"
+	touch "$RECORD_FILE" | tee -a "$LOG_FILE"
+	(echo "dark|" >"$RECORD_FILE") | tee -a "$LOG_FILE"
 fi
 
 # Get previous values
@@ -24,18 +27,21 @@ IFS='|' read -r prev_mode prev_wall <"$RECORD_FILE"
 mode=$prev_mode
 automode=false
 switchmode=false
-relaunch_only=false
-launch_only=false
+reload=false
+relaunch=false
+launch=false
 wallpaper=""
 hexcolor=""
 directory=""
 
 log() {
-	echo "LOG: $1"
+	log="LOG: $1"
+	echo "$log" | tee -a "$LOG_FILE"
 }
 
 error() {
-	echo "ERROR: $1"
+	log="ERROR: $1"
+	echo "$log" | tee -a "$LOG_FILE"
 }
 
 # Function to display help
@@ -46,7 +52,9 @@ show_help() {
 	echo "  -m, --mode [mode]             Mode to use (default: dark)"
 	echo "  -M, --automode                Automatically determine mode"
 	echo "  -s, --switchmode              Switch between modes"
-	echo "  -r, --relaunch                Only relaunch, no generation"
+	echo "  -l, --launch                  Only launch, no generation"
+	echo "  -r, --reload                  Reload and set, no generation"
+	echo "  -R, --relaunch                Relaunch and set"
 	echo "  -w, --wallpaper [wallpaper]   Wallpaper to be used to generate colors"
 	echo "  -c, --color [hexcolor]        Hex color to be used to generate colors"
 	echo "  -d, --dir [directory]         Directory to choose wallpaper randomly from"
@@ -68,12 +76,16 @@ while [[ $# -gt 0 ]]; do
 		switchmode=true
 		shift
 		;;
-	-r | --relaunch)
-		relaunch_only=true
+	-l | --launch)
+		launch=true
 		shift
 		;;
-	-l | --launch)
-		launch_only=true
+	-r | --reload)
+		reload=true
+		shift
+		;;
+	-R | --relaunch)
+		relaunch=true
 		shift
 		;;
 	-w | --wallpaper)
@@ -99,17 +111,17 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 
-# if relaunch only relaunch with previous values
-if $relaunch_only; then
-	log "Relaunching without changes..."
-	~/.scripts/loadreload/__main__.bash -w "$prev_wall" -m "$prev_mode"
+# reload
+if $reload; then
+	log "Reloading without changes..."
+	~/.scripts/loadreload/__main__.bash -w "$prev_wall" -m "$prev_mode" -r | tee -a "$LOG_FILE"
 	exit 0
 fi
 
-# if launch only relaunch with previous values
-if $launch_only; then
+# launch
+if $launch; then
 	log "Launching..."
-	~/.scripts/loadreload/__main__.bash -w "$prev_wall" -m "$prev_mode" -l
+	~/.scripts/loadreload/__main__.bash -w "$prev_wall" -m "$prev_mode" -l | tee -a "$LOG_FILE"
 	exit 0
 fi
 
@@ -141,7 +153,7 @@ if [[ $automode == true ]] && [[ -z "$wallpaper" ]] && [[ -z $directory ]]; then
 	exit 1
 elif [[ $automode == true ]]; then
 	if [ -x "$SCRIPT_DIR/utils/isDark.bash" ]; then
-		mode=$("$SCRIPT_DIR/utils/isDark.bash" "$wall")
+		mode=$("$SCRIPT_DIR/utils/isDark.bash" "$wall" | tee -a "$LOG_FILE")
 		log "$mode detected"
 	else
 		error "isDark.bash not found or isn't executable!"
@@ -150,7 +162,7 @@ elif [[ $automode == true ]]; then
 fi
 
 # Navigate to script directory
-cd "$SCRIPT_DIR"/colorinator || exit
+(cd "$SCRIPT_DIR"/colorinator | tee -a "$LOG_FILE") || exit
 
 if $switchmode; then
 	if [[ "$prev_mode" == "light" ]]; then
@@ -176,4 +188,8 @@ fi
 log "Relaunching..."
 
 # Launch or reload necessary components
-~/.scripts/loadreload/__main__.bash -w "$wall" -m "$mode"
+if $relaunch; then # relaunch
+	~/.scripts/loadreload/__main__.bash -w "$wall" -m "$mode" -R | tee -a "$LOG_FILE"
+else # reload
+	~/.scripts/loadreload/__main__.bash -w "$wall" -m "$mode" -r | tee -a "$LOG_FILE"
+fi
