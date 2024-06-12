@@ -4,7 +4,7 @@ from utils.generate_colors_material import generate_color_material
 
 
 def generate_raw_colors(
-    path=None, color=None, mode="dark", scheme="vibrant", file=False
+    path=None, color=None, mode="dark", scheme="vibrant", file=False, transparent=True
 ):
     if path is None and color is None:
         raise ValueError("You must provide a path or a color")
@@ -13,6 +13,7 @@ def generate_raw_colors(
         path=path,
         color=color,
         mode=mode,
+        transparent=transparent,
         scheme=scheme,
         termscheme="templates/terminal/scheme-base.json",
         term_fg_boost=0.2,

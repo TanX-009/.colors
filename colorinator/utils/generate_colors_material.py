@@ -177,7 +177,7 @@ def generate_color_material(
     mode="dark",
     scheme="vibrant",
     smart=False,
-    transparency="opaque",
+    transparent=False,
     termscheme=None,
     harmony=0.8,
     harmonize_threshold=100,
@@ -188,7 +188,6 @@ def generate_color_material(
     printit=False,
 ) -> Dict[str, Any]:
     darkmode = mode == "dark"
-    transparent = transparency == "transparent"
 
     argb = 0xFFFFFFFF
     hct = Hct.from_int(argb)
