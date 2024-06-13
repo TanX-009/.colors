@@ -161,9 +161,6 @@ elif [[ $automode == true ]]; then
 	fi
 fi
 
-# Navigate to script directory
-(cd "$SCRIPT_DIR"/colorinator | tee -a "$LOG_FILE") || exit
-
 if $switchmode; then
 	if [[ "$prev_mode" == "light" ]]; then
 		mode="dark"
@@ -176,6 +173,9 @@ if $switchmode; then
 fi
 
 log "Generating..."
+
+# Navigate to script directory
+cd "$SCRIPT_DIR"/colorinator || exit
 
 # Generate colors
 if [ -n "$wall" ] || [ -n "$directory" ]; then

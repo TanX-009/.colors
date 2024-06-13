@@ -1020,42 +1020,42 @@
      y="167"
      width="12"
      height="12"
-     style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+     style="fill:{onSurface};opacity:1;fill-opacity:1" />
   <rect
      id="progress-pattern-disabled-bottom"
      x="110"
      y="187"
      width="12"
      height="12"
-     style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+     style="fill:{onSurface};opacity:1;fill-opacity:1" />
   <rect
      id="progress-pattern-disabled-topleft"
      x="98"
      y="167"
      width="12"
      height="12"
-     style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+     style="fill:{onSurface};opacity:1;fill-opacity:1" />
   <rect
      id="progress-pattern-disabled-topright"
      x="122"
      y="167"
      width="12"
      height="12"
-     style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+     style="fill:{onSurface};opacity:1;fill-opacity:1" />
   <rect
      id="progress-pattern-disabled-bottomleft"
      x="98"
      y="187"
      width="12"
      height="12"
-     style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+     style="fill:{onSurface};opacity:1;fill-opacity:1" />
   <rect
      id="progress-pattern-disabled-bottomright"
      x="122"
      y="187"
      width="12"
      height="12"
-     style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+     style="fill:{onSurface};opacity:1;fill-opacity:1" />
   <g
      id="progress-pattern-normal"
      transform="matrix(1.5 0 0 1 -19 17)">
@@ -1126,19 +1126,19 @@
        width="8"
        height="8"
        id="rect201"
-       style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="progress-pattern-disabled"
      transform="matrix(1.5 0 0 1 59 17)"
-     style="fill:{surfaceBright};fill-opacity:1">
+     style="fill:{onSurface};fill-opacity:1">
     <rect
        x="34"
        y="162"
        width="8"
        height="8"
        id="rect204"
-       style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="progress-pattern-disabled-right"
@@ -1149,7 +1149,7 @@
        width="8"
        height="8"
        id="rect207"
-       style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <rect
      id="itemview-pressed-top"
@@ -5534,7 +5534,7 @@
        d="m 81,852 c -4.812044,0 -8,3.20014 -8,8 h 8 z"
        fill="{onSurface}"
        id="path2159"
-       style="stroke-width:0.888889;fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="stroke-width:0.888889;fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="scrollbarslider-pressed-left"
@@ -5550,7 +5550,7 @@
        d="m 73,860 v 23 h 8 v -23 z"
        fill="{onSurface}"
        id="path2165"
-       style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="scrollbarslider-pressed-topright"
@@ -5566,7 +5566,7 @@
        d="m 81,852 c -4.812044,0 -8,3.20014 -8,8 h 8 z"
        fill="{onSurface}"
        id="path2171"
-       style="stroke-width:0.888889;fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="stroke-width:0.888889;fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="scrollbarslider-pressed-bottomleft"
@@ -5582,7 +5582,7 @@
        d="m 81,852 c -4.812044,0 -8,3.20014 -8,8 h 8 z"
        fill="{onSurface}"
        id="path2177"
-       style="stroke-width:0.888889;fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="stroke-width:0.888889;fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="scrollbarslider-pressed-bottomright"
@@ -5598,7 +5598,7 @@
        d="m 81,852 c -4.812044,0 -8,3.20014 -8,8 h 8 z"
        fill="{onSurface}"
        id="path2183"
-       style="stroke-width:0.888889;fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="stroke-width:0.888889;fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="scrollbarslider-pressed-right"
@@ -5614,7 +5614,7 @@
        d="m 73,860 v 23 h 8 v -23 z"
        fill="{onSurface}"
        id="path2189"
-       style="fill:{surfaceBright};opacity:1;fill-opacity:1" />
+       style="fill:{onSurface};opacity:1;fill-opacity:1" />
   </g>
   <g
      id="splitter-normal">
