@@ -378,10 +378,9 @@ if __name__ == "__main__":
         help="decide scheme type based on image color",
     )
     parser.add_argument(
-        "--transparency",
-        type=str,
-        choices=["opaque", "transparent"],
-        default="opaque",
+        "--transparent",
+        type=bool,
+        default=False,
         help="enable transparency",
     )
     parser.add_argument(
@@ -421,7 +420,7 @@ if __name__ == "__main__":
         "--debug", action="store_true", default=False, help="debug mode"
     )
     parser.add_argument(
-        "--print", action="store_true", default=False, help="print all created colors"
+        "--printit", action="store_true", default=False, help="print all created colors"
     )
     args = parser.parse_args()
 
