@@ -17,7 +17,9 @@ from generators.icons import generate_icons
 def main(args, parser):
     if args.generate_all:
         if args.image:
-            colors = generate_raw_colors(args.image, mode=args.mode, file=True)
+            colors = generate_raw_colors(
+                args.image, mode=args.mode, file=True, scheme="monochrome"
+            )
         elif args.color:
             colors = generate_raw_colors(color=args.color, mode=args.mode, file=True)
         else:

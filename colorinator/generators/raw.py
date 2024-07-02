@@ -9,13 +9,18 @@ def generate_raw_colors(
     if path is None and color is None:
         raise ValueError("You must provide a path or a color")
 
+    if scheme is "monochrome":
+        termscheme = "templates/terminal/scheme-monochrome.json"
+    else:
+        termscheme = ("templates/terminal/scheme-base.json",)
+
     raw = generate_color_material(
         path=path,
         color=color,
         mode=mode,
         transparent=transparent,
         scheme=scheme,
-        termscheme="templates/terminal/scheme-base.json",
+        termscheme=termscheme,
         term_fg_boost=0.2,
         blend_bg_fg=True,
     )
