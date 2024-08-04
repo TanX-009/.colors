@@ -3,6 +3,7 @@ import argparse
 import os
 import sys
 
+from generators.foot import generate_foot_colors
 from generators.kvantum import generate_kvantum_colors
 from generators.raw import generate_raw_colors
 from generators.terminal import generate_terminal_colors
@@ -18,10 +19,12 @@ def main(args, parser):
     if args.generate_all:
         if args.image:
             colors = generate_raw_colors(
-                args.image, mode=args.mode, file=True, scheme="monochrome"
+                args.image, mode=args.mode, file=True, transparent=False
             )
         elif args.color:
-            colors = generate_raw_colors(color=args.color, mode=args.mode, file=True)
+            colors = generate_raw_colors(
+                color=args.color, mode=args.mode, file=True, transparent=False
+            )
         else:
             print("No color or image provided")
             parser.print_usage()
@@ -57,6 +60,7 @@ def main(args, parser):
         # generate kvantum colors
         generate_kvantum_colors(colors)
         # generate rasi colors
+        generate_foot_colors(colors)
         generate_misc_colors(
             colors,
             "../generated/rasi/colors.rasi",

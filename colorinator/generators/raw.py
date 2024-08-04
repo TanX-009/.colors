@@ -12,7 +12,7 @@ def generate_raw_colors(
     if scheme is "monochrome":
         termscheme = "templates/terminal/scheme-monochrome.json"
     else:
-        termscheme = ("templates/terminal/scheme-base.json",)
+        termscheme = "templates/terminal/scheme-base.json"
 
     raw = generate_color_material(
         path=path,
