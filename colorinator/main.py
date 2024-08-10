@@ -19,11 +19,11 @@ def main(args, parser):
     if args.generate_all:
         if args.image:
             colors = generate_raw_colors(
-                args.image, mode=args.mode, file=True, transparent=False
+                args.image, mode=args.mode, file=True, transparent=True
             )
         elif args.color:
             colors = generate_raw_colors(
-                color=args.color, mode=args.mode, file=True, transparent=False
+                color=args.color, mode=args.mode, file=True, transparent=True
             )
         else:
             print("No color or image provided")

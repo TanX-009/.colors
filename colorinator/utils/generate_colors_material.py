@@ -75,7 +75,7 @@ def boost_chroma_tone(argb: int, chroma: float = 1, tone: float = 1) -> int:
 def lighten_if_dark(rgb_color, threshold, factor):
     luminance = rgb_to_luminance(rgb_color)
     if luminance < threshold:
-        factor = threshold-luminance
+        factor = threshold - luminance
         lightened_rgb = tuple(min(c + (1.0 - c) * factor, 1.0) for c in rgb_color)
         return lightened_rgb
     return rgb_color
@@ -195,12 +195,16 @@ def generate_color_material(
 
     if path is not None:
         image = Image.open(os.path.expanduser(path))
+
+        if image.format == "GIF":
+            image.seek(1)
+
         wsize, hsize = image.size
         wsize_new, hsize_new = calculate_optimal_size(wsize, hsize, size)
         if wsize_new < wsize or hsize_new < hsize:
             image = image.resize((wsize_new, hsize_new), Image.Resampling.BICUBIC)
 
-        img_data = list( image.getdata() )
+        img_data = list(image.getdata())
         colors = QuantizeCelebi(img_data, 128)
         argb = Score.score(colors)[0]
 
