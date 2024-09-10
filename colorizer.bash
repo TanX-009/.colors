@@ -135,7 +135,15 @@ fi
 if [ -n "$wallpaper" ] && [ -f "$wallpaper" ]; then
   wall=$(realpath "$wallpaper")
 elif [ -n "$directory" ]; then
-  random_wallpaper=$(find "$directory" -type f | shuf -n 1)
+  random_wallpaper=$(find "$directory" -type f \
+    -not -path '*/.git/*' \
+    \( -iname '*.jpg' -o \
+    -iname '*.jpeg' -o \
+    -iname '*.png' -o \
+    -iname '*.gif' -o \
+    -iname '*.bmp' -o \
+    -iname '*.tiff' \) |
+    shuf -n 1)
   if [ -n "$random_wallpaper" ]; then
     wall=$(realpath "$random_wallpaper")
   else

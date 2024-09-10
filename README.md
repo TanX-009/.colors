@@ -1,2 +1,2 @@
 ## Dependencies
-`python-materialyoucolor-git adw-gtk-theme adw-gtk3 imagemagick`
+`python-materialyoucolor-git adw-gtk-theme imagemagick`
