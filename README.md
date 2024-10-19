@@ -1,2 +1,2 @@
 ## Dependencies
-`python-materialyoucolor-git adw-gtk-theme imagemagick`
+`matugen adw-gtk-theme imagemagick`

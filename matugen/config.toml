@@ -1,0 +1,120 @@
+[config]
+# version_check = true
+set_wallpaper = false
+wallpaper_tool = 'Swaybg'
+swww_options = [
+    "--transition-type",
+    "center",
+]
+[config.custom_colors]
+red = { color = "#ff0000", blend = false }
+darkorange = { color = "#ff8c00", blend = false }
+orange = { color = "#ffa500", blend = false }
+gold = { color = "#ffd700", blend = false }
+lime = { color = "#00ff00", blend = false }
+chartreuse = { color = "#7fff00", blend = false }
+limegreen = { color = "#32cd32", blend = false }
+springgreen = { color = "#00ff7f", blend = false }
+mediumspringgreen = { color = "#00fa9a", blend = false }
+mediumaquamarine = { color = "#66cdaa", blend = false }
+cyan = { color = "#00ffff", blend = false }
+deepskyblue = { color = "#00bfff", blend = false }
+royalblue = { color = "#4169e1", blend = false }
+blue = { color = "#0000ff", blend = false }
+purple = { color = "#800080", blend = false }
+mediumpurple = { color = "#9370db", blend = false }
+orchid = { color = "#da70d6", blend = false }
+fuchsia = { color = "#ff00ff", blend = false }
+deeppink = { color = "#ff1493", blend = false }
+crimson = { color = "#dc143c", blend = false }
+
+[templates.ptm]
+input_path = "./templates/terminal/sequences.txt"
+output_path = "~/.colors/generated/terminal/sequences.txt"
+
+[templates.terminalfoot]
+input_path = "./templates/terminal/foot/colors"
+output_path = "~/.colors/generated/terminal/foot/colors"
+
+[templates.terminalkitty]
+input_path = "./templates/terminal/kitty/colors.conf"
+output_path = "~/.colors/generated/terminal/kitty/colors.conf"
+
+[templates.gtkcss]
+input_path = "./templates/gtk/gtk.css"
+output_path = "~/.colors/generated/gtk/gtk.css"
+
+[templates.gtkcolorscss]
+input_path = "./templates/gtk/colors.css"
+output_path = "~/.colors/generated/gtk/colors.css"
+
+[templates.hyprland]
+input_path = "./templates/hyprland/colors.conf"
+output_path = "~/.colors/generated/hyprland/colors.conf"
+
+[templates.kvantumsvg]
+input_path = "./templates/kvantum/kvantum.svg"
+output_path = "~/.colors/generated/kvantum/kvantum.svg"
+expr_prefix = "__{{"
+expr_postfix = "}}__"
+
+[templates.kvantumkvconfig]
+input_path = "./templates/kvantum/kvantum.kvconfig"
+output_path = "~/.colors/generated/kvantum/kvantum.kvconfig"
+
+[templates.scss]
+input_path = "./templates/scss/colors.scss"
+output_path = "~/.colors/generated/scss/colors.scss"
+
+[templates.lua]
+input_path = "./templates/lua/colors.lua"
+output_path = "~/.colors/generated/lua/colors.lua"
+
+
+
+# Icons
+[templates.lock]
+input_path = "./templates/icons/lock.svg"
+output_path = "~/.colors/generated/icons/lock.svg"
+[templates.lock_contrast]
+input_path = "./templates/icons/lock_contrast.svg"
+output_path = "~/.colors/generated/icons/lock_contrast.svg"
+[templates.logout]
+input_path = "./templates/icons/logout.svg"
+output_path = "~/.colors/generated/icons/logout.svg"
+[templates.logout_contrast]
+input_path = "./templates/icons/logout_contrast.svg"
+output_path = "~/.colors/generated/icons/logout_contrast.svg"
+[templates.poweroff]
+input_path = "./templates/icons/poweroff.svg"
+output_path = "~/.colors/generated/icons/poweroff.svg"
+[templates.poweroff_contrast]
+input_path = "./templates/icons/poweroff_contrast.svg"
+output_path = "~/.colors/generated/icons/poweroff_contrast.svg"
+[templates.restart]
+input_path = "./templates/icons/restart.svg"
+output_path = "~/.colors/generated/icons/restart.svg"
+[templates.restart_contrast]
+input_path = "./templates/icons/restart_contrast.svg"
+output_path = "~/.colors/generated/icons/restart_contrast.svg"
+[templates.sleep]
+input_path = "./templates/icons/sleep.svg"
+output_path = "~/.colors/generated/icons/sleep.svg"
+[templates.sleep_contrast]
+input_path = "./templates/icons/sleep_contrast.svg"
+output_path = "~/.colors/generated/icons/sleep_contrast.svg"
+[templates.windows]
+input_path = "./templates/icons/windows.svg"
+output_path = "~/.colors/generated/icons/windows.svg"
+[templates.windows_contrast]
+input_path = "./templates/icons/windows_contrast.svg"
+output_path = "~/.colors/generated/icons/windows_contrast.svg"
+
+
+# [templates.test]
+# input_path = "./templates/test.txt"
+# output_path = "~/.colors/generated/test.txt"
+
+# [templates.terminalterm16]
+# input_path = "./templates/terminal/term16.txt"
+# output_path = "~/.colors/generated/terminal/term16.txt"

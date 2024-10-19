@@ -1,0 +1,7 @@
+{{colors.primary.default.hex}}
+{{colors.primary.default.hex | auto_lightness: 10.0}}
+
+
+
+<* for name, value in colors *>${{name | camel_case}}: {{value.default.hex}};
+<* endfor *>

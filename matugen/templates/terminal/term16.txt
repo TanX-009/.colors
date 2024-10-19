@@ -1,0 +1,44 @@
+    bg              surface  										{{ colors.surface.default.hex }}
+    fg           on_surface  										{{ colors.on_surface.default.hex }}
+                                                
+ term0              surface  										{{ colors.surface.default.hex }}
+ term8       surface_bright auto_lightness 12.0 {{ colors.surface_bright.default.hex | auto_lightness: 12.0 }}
+                                                
+ term1                error  										{{ colors.error.default.hex }}
+ term9                error auto_lightness  8.0	{{ colors.error.default.hex | auto_lightness: 8.0 }}
+                                                
+ term2             tertiary  										{{ colors.tertiary.default.hex }}
+term10             tertiary auto_lightness  8.0	{{ colors.tertiary.default.hex | auto_lightness: 8.0 }}
+                                                
+ term3            secondary  										{{ colors.secondary.default.hex }}
+term11            secondary auto_lightness  8.0	{{ colors.secondary.default.hex | auto_lightness: 8.0 }}
+                                                
+ term4              primary  										{{ colors.primary.default.hex }}
+term12              primary auto_lightness  8.0	{{ colors.primary.default.hex | auto_lightness: 8.0 }}
+                                                
+ term5    primary_container auto_lightness 20.0	{{ colors.primary_container.default.hex | auto_lightness: 20.0 }}
+term13    primary_container auto_lightness 15.0	{{ colors.primary_container.default.hex | auto_lightness: 15.0 }}
+                                                
+ term6  secondary_fixed_dim auto_lightness 20.0	{{ colors.secondary_fixed_dim.default.hex | auto_lightness: 20.0 }}
+term14  secondary_fixed_dim auto_lightness  8.0	{{ colors.secondary_fixed_dim.default.hex | auto_lightness: 12.0 }}
+                                                
+ term7   on_surface_variant  										{{ colors.on_surface_variant.default.hex }}
+term15           on_surface  										{{ colors.on_surface.default.hex }}
+                                                
+                                                
+ term0              surface  										{{ colors.surface.default.hex }}
+ term1                error  										{{ colors.error.default.hex }}
+ term2             tertiary  										{{ colors.tertiary.default.hex }}
+ term3            secondary  										{{ colors.secondary.default.hex }}
+ term4              primary  										{{ colors.primary.default.hex }}
+ term5    primary_container auto_lightness 20.0	{{ colors.primary_container.default.hex | auto_lightness: 20.0 }}
+ term6  secondary_fixed_dim auto_lightness 20.0	{{ colors.secondary_fixed_dim.default.hex | auto_lightness: 20.0 }}
+ term7   on_surface_variant  										{{ colors.on_surface_variant.default.hex }}
+ term8       surface_bright auto_lightness 12.0 {{ colors.surface_bright.default.hex | auto_lightness: 12.0 }}
+ term9                error auto_lightness  8.0	{{ colors.error.default.hex | auto_lightness: 8.0 }}
+term10             tertiary auto_lightness  8.0	{{ colors.tertiary.default.hex | auto_lightness: 8.0 }}
+term11            secondary auto_lightness  8.0	{{ colors.secondary.default.hex | auto_lightness: 8.0 }}
+term12              primary auto_lightness  8.0	{{ colors.primary.default.hex | auto_lightness: 8.0 }}
+term13    primary_container auto_lightness 15.0	{{ colors.primary_container.default.hex | auto_lightness: 15.0 }}
+term14  secondary_fixed_dim auto_lightness  8.0	{{ colors.secondary_fixed_dim.default.hex | auto_lightness: 12.0 }}
+term15           on_surface  										{{ colors.on_surface.default.hex }}

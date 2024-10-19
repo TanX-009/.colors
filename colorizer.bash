@@ -4,6 +4,8 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 CACHE_DIR="$HOME/.cache/colorinator"
 RECORD_FILE="$SCRIPT_DIR/generated/record"
 LOG_FILE="$CACHE_DIR/colorizer.log"
+
+MATUGEN="$HOME/C/matugen/target/release/matugen"
 # clear log file
 true >"$LOG_FILE"
 
@@ -183,15 +185,12 @@ fi
 
 log "Generating..."
 
-# Navigate to script directory
-cd "$SCRIPT_DIR"/colorinator || exit
-
 # Generate colors
 if [ -n "$wall" ] || [ -n "$directory" ]; then
-  python3 main.py -G -i "$wall" -m "$mode" >"$CACHE_DIR"/colorinator.log 2>&1
+  "$MATUGEN" image "$wall" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
   echo "$mode|$wall" >"$RECORD_FILE"
 elif [ -n "$hexcolor" ]; then
-  python3 main.py -G -c "$hexcolor" -m "$mode" >"$CACHE_DIR"/colorinator.log 2>&1
+  "$MATUGEN" color "$hexcolor" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
 fi
 
 log "Relaunching..."
