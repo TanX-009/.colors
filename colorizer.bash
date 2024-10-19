@@ -190,7 +190,7 @@ if [ -n "$wall" ] || [ -n "$directory" ]; then
   "$MATUGEN" image "$wall" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
   echo "$mode|$wall" >"$RECORD_FILE"
 elif [ -n "$hexcolor" ]; then
-  "$MATUGEN" color "$hexcolor" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
+  "$MATUGEN" color hex "$hexcolor" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
 fi
 
 log "Relaunching..."
