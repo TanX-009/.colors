@@ -51,7 +51,7 @@
 @define-color sidebar_bg_color @window_bg_color;
 @define-color sidebar_fg_color @window_fg_color;
 @define-color sidebar_border_color @sidebar_bg_color;
-@define-color sidebar_backdrop_color @sidebar_bg_color"
+@define-color sidebar_backdrop_color @sidebar_bg_color;
 
 @define-color theme_fg_color #AEE5FA;
 @define-color theme_text_color #AEE5FA;
