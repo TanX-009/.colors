@@ -5,7 +5,8 @@ CACHE_DIR="$HOME/.cache/colorinator"
 RECORD_FILE="$SCRIPT_DIR/generated/record"
 LOG_FILE="$CACHE_DIR/colorizer.log"
 
-MATUGEN="$HOME/C/matugen/target/release/matugen"
+MATUGEN="matugen"
+# MATUGEN="$HOME/C/matugen/target/release/matugen"
 # clear log file
 true >"$LOG_FILE"
 
@@ -137,15 +138,12 @@ fi
 if [ -n "$wallpaper" ] && [ -f "$wallpaper" ]; then
   wall=$(realpath "$wallpaper")
 elif [ -n "$directory" ]; then
-  random_wallpaper=$(find "$directory" -type f \
-    -not -path '*/.git/*' \
-    \( -iname '*.jpg' -o \
-    -iname '*.jpeg' -o \
-    -iname '*.png' -o \
-    -iname '*.gif' -o \
-    -iname '*.bmp' -o \
-    -iname '*.tiff' \) |
-    shuf -n 1)
+  if [ -x "$SCRIPT_DIR/utils/randomWall.bash" ]; then
+    random_wallpaper=$("$SCRIPT_DIR/utils/randomWall.bash" "$directory" "$CACHE_DIR"/wallpaper)
+  else
+    error "randomWall.bash not found or isn't executable!"
+  fi
+
   if [ -n "$random_wallpaper" ]; then
     wall=$(realpath "$random_wallpaper")
   else
