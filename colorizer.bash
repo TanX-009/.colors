@@ -139,7 +139,7 @@ if [ -n "$wallpaper" ] && [ -f "$wallpaper" ]; then
   wall=$(realpath "$wallpaper")
 elif [ -n "$directory" ]; then
   if [ -x "$SCRIPT_DIR/utils/randomWall.bash" ]; then
-    random_wallpaper=$("$SCRIPT_DIR/utils/randomWall.bash" "$directory" "$CACHE_DIR"/wallpaper)
+    random_wallpaper=$("$SCRIPT_DIR/utils/randomWall.bash" "$directory" "$CACHE_DIR"/wallpaper | tee -a "$LOG_FILE")
   else
     error "randomWall.bash not found or isn't executable!"
   fi
