@@ -62,6 +62,10 @@ expr_postfix = "}}__"
 input_path = "./templates/kvantum/kvantum.kvconfig"
 output_path = "~/.colors/generated/kvantum/kvantum.kvconfig"
 
+[templates.css]
+input_path = "./templates/css/colors.css"
+output_path = "~/.colors/generated/css/colors.css"
+
 [templates.scss]
 input_path = "./templates/scss/colors.scss"
 output_path = "~/.colors/generated/scss/colors.scss"

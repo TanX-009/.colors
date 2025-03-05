@@ -1,0 +1,29 @@
+/* colors */
+:root {
+  <* for name, value in colors *>--{{name | camel_case}}: {{value.dark.hex}};
+  <* endfor *>
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    <* for name, value in colors *>--{{name | camel_case}}: {{value.dark.hex}};
+    <* endfor *>
+  }
+}
+[data-theme="dark"] {
+  <* for name, value in colors *>--{{name | camel_case}}: {{value.dark.hex}};
+  <* endfor *>
+}
+
+/* Light theme */
+@media (prefers-color-scheme: light) {
+  :root {
+    <* for name, value in colors *>--{{name | camel_case}}: {{value.light.hex}};
+    <* endfor *>
+  }
+}
+[data-theme="light"] {
+  <* for name, value in colors *>--{{name | camel_case}}: {{value.light.hex}};
+  <* endfor *>
+}
