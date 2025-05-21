@@ -19,11 +19,11 @@ bright2={{ colors.tertiary.default.hex_stripped | auto_lightness: 8.0 }}
 regular3={{ colors.secondary.default.hex_stripped }}
 bright3={{ colors.secondary.default.hex_stripped | auto_lightness: 8.0 }}
 
-regular4={{ colors.primary.default.hex_stripped }}
-bright4={{ colors.primary.default.hex_stripped | auto_lightness: 8.0 }}
+regular4={{ colors.primary_container.default.hex_stripped | auto_lightness: 20.0 }}
+bright4={{ colors.primary_container.default.hex_stripped | auto_lightness: 15.0 }}
 
-regular5={{ colors.primary_container.default.hex_stripped | auto_lightness: 20.0 }}
-bright5={{ colors.primary_container.default.hex_stripped | auto_lightness: 15.0 }}
+regular5={{ colors.primary.default.hex_stripped }}
+bright5={{ colors.primary.default.hex_stripped | auto_lightness: 8.0 }}
 
 regular6={{ colors.secondary_fixed_dim.default.hex_stripped | auto_lightness: 20.0 }}
 bright6={{ colors.secondary_fixed_dim.default.hex_stripped | auto_lightness: 12.0 }}
