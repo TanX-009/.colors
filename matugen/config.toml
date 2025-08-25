@@ -52,6 +52,10 @@ output_path = "~/.colors/generated/gtk/colors.css"
 input_path = "./templates/hyprland/colors.conf"
 output_path = "~/.colors/generated/hyprland/colors.conf"
 
+[templates.quickshell]
+input_path = "./templates/quickshell/colors.json"
+output_path = "~/.colors/generated/quickshell/colors.json"
+
 [templates.kvantumsvg]
 input_path = "./templates/kvantum/kvantum.svg"
 output_path = "~/.colors/generated/kvantum/kvantum.svg"
