@@ -40,6 +40,10 @@ output_path = "~/.colors/generated/terminal/foot/colors"
 input_path = "./templates/terminal/kitty/colors.conf"
 output_path = "~/.colors/generated/terminal/kitty/colors.conf"
 
+[templates.terminalalacritty]
+input_path = "./templates/terminal/alacritty/colors.toml"
+output_path = "~/.colors/generated/terminal/alacritty/colors.toml"
+
 [templates.gtkcss]
 input_path = "./templates/gtk/gtk.css"
 output_path = "~/.colors/generated/gtk/gtk.css"
