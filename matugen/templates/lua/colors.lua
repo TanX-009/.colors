@@ -10,7 +10,7 @@ return {
   term5 = "{{ colors.primary_container.default.hex | auto_lightness: 20.0 }}",
   term6 = "{{ colors.secondary_fixed_dim.default.hex | auto_lightness: 20.0 }}",
   term7 = "{{ colors.on_surface_variant.default.hex }}",
-  term8 = "{{ colors.surface_bright.default.hex | auto_lightness: 12.0 }}",
+  term8 = "{{ colors.outline.default.hex }}",
   term9 = "{{ colors.error.default.hex | auto_lightness: 8.0 }}",
   term10 = "{{ colors.tertiary.default.hex | auto_lightness: 8.0 }}",
   term11 = "{{ colors.secondary.default.hex | auto_lightness: 8.0 }}",

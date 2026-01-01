@@ -46,7 +46,7 @@ white   = '{{colors.on_surface_variant.default.hex}}'
 
 [colors.bright]
 black   = '{{colors.surface_bright.default.hex | auto_lightness: 12.0}}'
-red     = '{{colors.error.default.hex}}'
+red     = '{{colors.error.default.hex | auto_lightness: 8.0}}'
 green   = '{{colors.tertiary.default.hex | auto_lightness: 8.0}}'
 yellow  = '{{colors.secondary.default.hex | auto_lightness: 8.0}}'
 blue    = '{{colors.primary_container.default.hex}}'

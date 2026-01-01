@@ -1,11 +1,11 @@
 [config]
 # version_check = true
-set_wallpaper = false
-wallpaper_tool = 'Swaybg'
-swww_options = [
-    "--transition-type",
-    "center",
-]
+
+[config.wallpaper]
+command = "swww"
+arguments = [ "img", "-t", "random", "--transition-duration", "0.5", "--transition-step", "255", "--transition-fps", "60", "-f", "Nearest",]
+set = true
+
 [config.custom_colors]
 red = { color = "#ff0000", blend = false }
 darkorange = { color = "#ff8c00", blend = false }
@@ -44,13 +44,30 @@ output_path = "~/.colors/generated/terminal/kitty/colors.conf"
 input_path = "./templates/terminal/alacritty/colors.toml"
 output_path = "~/.colors/generated/terminal/alacritty/colors.toml"
 
-[templates.gtkcss]
+[templates.gtk3]
 input_path = "./templates/gtk/gtk.css"
-output_path = "~/.colors/generated/gtk/gtk.css"
+output_path = '~/.config/gtk-3.0/colors.css'
+# post_hook = '~/.config/matugen/scripts/gtk.bash {{mode}}'
 
-[templates.gtkcolorscss]
-input_path = "./templates/gtk/colors.css"
-output_path = "~/.colors/generated/gtk/colors.css"
+[templates.gtk4]
+input_path = "./templates/gtk/gtk.css"
+output_path = '~/.config/gtk-4.0/colors.css'
+
+# [templates.gtkcss]
+# input_path = "./templates/gtk/gtk.css"
+# output_path = "~/.colors/generated/gtk/gtk.css"
+#
+# [templates.gtkcolorscss]
+# input_path = "./templates/gtk/colors.css"
+# output_path = "~/.colors/generated/gtk/colors.css"
+
+[templates.qt5ct]
+input_path = './templates/qtct-colors.conf'
+output_path = '~/.config/qt5ct/colors/matugen.conf'
+
+[templates.qt6ct]
+input_path = './templates/qtct-colors.conf'
+output_path = '~/.config/qt6ct/colors/matugen.conf'
 
 [templates.hyprland]
 input_path = "./templates/hyprland/colors.conf"
@@ -60,15 +77,15 @@ output_path = "~/.colors/generated/hyprland/colors.conf"
 input_path = "./templates/quickshell/colors.json"
 output_path = "~/.colors/generated/quickshell/colors.json"
 
-[templates.kvantumsvg]
-input_path = "./templates/kvantum/kvantum.svg"
-output_path = "~/.colors/generated/kvantum/kvantum.svg"
-expr_prefix = "__{{"
-expr_postfix = "}}__"
-
-[templates.kvantumkvconfig]
-input_path = "./templates/kvantum/kvantum.kvconfig"
-output_path = "~/.colors/generated/kvantum/kvantum.kvconfig"
+# [templates.kvantumsvg]
+# input_path = "./templates/kvantum/kvantum.svg"
+# output_path = "~/.colors/generated/kvantum/kvantum.svg"
+# expr_prefix = "__{{"
+# expr_postfix = "}}__"
+#
+# [templates.kvantumkvconfig]
+# input_path = "./templates/kvantum/kvantum.kvconfig"
+# output_path = "~/.colors/generated/kvantum/kvantum.kvconfig"
 
 [templates.css]
 input_path = "./templates/css/colors.css"
