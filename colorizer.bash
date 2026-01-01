@@ -20,14 +20,17 @@ mkdir -p "$SCRIPT_DIR/generated" | tee -a "$LOG_FILE"
 # Create and echo empty values in RECORD_FILE
 if [ ! -f "$RECORD_FILE" ]; then
   touch "$RECORD_FILE" | tee -a "$LOG_FILE"
-  (echo "dark|" >"$RECORD_FILE") | tee -a "$LOG_FILE"
+  # Initial format: mode|scheme|wallpaper
+  (echo "dark|scheme-tonal-spot|" >"$RECORD_FILE") | tee -a "$LOG_FILE"
 fi
 
 # Get previous values
-IFS='|' read -r prev_mode prev_wall <"$RECORD_FILE"
+IFS='|' read -r prev_mode prev_scheme prev_wall <"$RECORD_FILE"
 
 # Default values
 mode=$prev_mode
+scheme_type=${prev_scheme:-"scheme-tonal-spot"}
+type_option_set=false
 automode=false
 select_wallpaper=false
 switchmode=false
@@ -59,17 +62,18 @@ show_help() {
   echo "Usage: ${0##*/} [options] [wallpaper]"
   echo
   echo "Options:"
-  echo "  -m, --mode [mode]             Mode to use (default: dark)"
-  echo "  -A, --automode                Automatically determine mode"
-  echo "  -S, --switchmode              Switch between modes"
-  echo "  -l, --launch                  Only launch, no generation (uses previous settings)"
-  echo "  -r, --reload                  Reload and set, no generation (uses previous settings)"
-  echo "  -R, --relaunch                Relaunch and set (uses previous settings)"
-  echo "  -w, --wallpaper [wallpaper]   Wallpaper to be used to generate colors"
-  echo "  -c, --color [hexcolor]        Hex color to be used to generate colors"
-  echo "  -d, --dir [directory]         Directory to choose wallpaper randomly from"
-  echo "  -s, --select                  Open a Zenity file dialog to select wallpaper"
-  echo "  -h, --help                    Display this help and exit"
+  echo "  -m, --mode [mode]               Mode to use (default: dark)"
+  echo "  -t, --type [type]               Color scheme type (default: scheme-tonal-spot)"
+  echo "  -A, --automode                  Automatically determine mode"
+  echo "  -S, --switchmode                Switch between modes"
+  echo "  -l, --launch                    Only launch, no generation"
+  echo "  -r, --reload                    Reload and set, no generation"
+  echo "  -R, --relaunch                  Relaunch and set"
+  echo "  -w, --wallpaper [wallpaper]     Wallpaper to generate colors"
+  echo "  -c, --color [hexcolor]          Hex color to generate colors"
+  echo "  -d, --dir [directory]           Directory to choose wallpaper randomly"
+  echo "  -s, --select                    Open a Zenity file dialog"
+  echo "  -h, --help                      Display this help and exit"
 }
 
 # Parse command-line arguments
@@ -83,6 +87,11 @@ while [[ $# -gt 0 ]]; do
     fi
     mode="$2"
     mode_option_set=1
+    shift 2
+    ;;
+  -t | --type)
+    scheme_type="$2"
+    type_option_set=true
     shift 2
     ;;
   -A | --automode)
@@ -249,6 +258,10 @@ elif $select_wallpaper; then
   fi
 fi
 
+rm "$CACHE_DIR"/wall
+# symlink the selected wallpaper to the CACHE_DIR
+ln -s "$wall" "$CACHE_DIR"/wall
+
 # Determine mode automatically if automode is set
 if [[ $automode == true ]]; then
   if [[ -z "$wall" ]]; then
@@ -266,36 +279,34 @@ if [[ $automode == true ]]; then
   fi
 fi
 
-# Handle --mode or --switchmode being the primary action (with no new wallpaper/color)
-if [[ $mode_option_set -ne 0 ]] && [[ $wallpaper_option_set -eq 0 ]] && [[ -z "$hexcolor" ]]; then
-  # If mode is changed, and no new wallpaper/color is given, use the previous wallpaper.
-  wall_for_mode_change=$prev_wall
-  log "Mode change requested without new wallpaper/color. Using previous wallpaper: $wall_for_mode_change"
+# Handle --mode, --switchmode, or --type being the primary action (with no new wallpaper/color)
+if { [[ $mode_option_set -ne 0 ]] || $type_option_set; } && [[ $wallpaper_option_set -eq 0 ]] && [[ -z "$hexcolor" ]]; then
+  # Use previous wallpaper
+  wall_for_regen=$prev_wall
+  log "Mode or Type change requested without new wallpaper/color. Using previous wallpaper: $wall_for_regen"
 
   # Update mode if switchmode is true
   if $switchmode; then
-    if [[ "$prev_mode" == "light" ]]; then
-      mode="dark"
-    else
-      mode="light"
-    fi
+    [[ "$prev_mode" == "light" ]] && mode="dark" || mode="light"
     log "Mode switched to: $mode"
   fi
 
-  # Generate colors based on previous wallpaper and new mode
-  log "Generating colors for mode change using previous wallpaper..."
-  "$MATUGEN" image "$wall_for_mode_change" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
-  echo "$mode|$wall_for_mode_change" >"$RECORD_FILE" # Update record
+  # Generate colors based on previous wallpaper and new settings
+  log "Generating colors for change using previous wallpaper ($mode / $scheme_type)..."
+  "$MATUGEN" image "$wall_for_regen" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" >"$CACHE_DIR"/matugen.log 2>&1
 
-  # Perform the reload/relaunch based on the 'action_option_set' flag
+  # Update record: mode|scheme|wallpaper
+  echo "$mode|$scheme_type|$wall_for_regen" >"$RECORD_FILE"
+
+  # Perform the reload/relaunch
   if $relaunch; then
-    log "Relaunching components after mode change..."
-    ~/.scripts/loadreload/__main__.bash -w "$wall_for_mode_change" -m "$mode" -R | tee -a "$LOG_FILE"
+    log "Relaunching components..."
+    ~/.scripts/loadreload/__main__.bash -w "$wall_for_regen" -m "$mode" -R | tee -a "$LOG_FILE"
   else
-    log "Reloading components after mode change..."
-    ~/.scripts/loadreload/__main__.bash -w "$wall_for_mode_change" -m "$mode" -r | tee -a "$LOG_FILE"
+    log "Reloading components..."
+    ~/.scripts/loadreload/__main__.bash -w "$wall_for_regen" -m "$mode" -r | tee -a "$LOG_FILE"
   fi
-  exit 0 # Exit after handling standalone mode change
+  exit 0
 fi
 
 # --- Core Logic for Color Generation (when new wallpaper/color is provided) ---
@@ -304,12 +315,11 @@ if [[ -n "$wall" ]] || [[ -n "$hexcolor" ]]; then
   log "Generating colors from new source..."
 
   if [ -n "$wall" ]; then
-    "$MATUGEN" image "$wall" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
-    echo "$mode|$wall" >"$RECORD_FILE" # Update record with new wall and mode
+    "$MATUGEN" image "$wall" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" >"$CACHE_DIR"/matugen.log 2>&1
+    echo "$mode|$scheme_type|$wall" >"$RECORD_FILE" # Updated record format
   elif [ -n "$hexcolor" ]; then
-    "$MATUGEN" color hex "$hexcolor" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" >"$CACHE_DIR"/matugen.log 2>&1
-    # Note: If hexcolor is used, $wall remains empty, so record won't change wallpaper
-    echo "$mode|$prev_wall" >"$RECORD_FILE" # Update mode, keep previous wallpaper
+    "$MATUGEN" color hex "$hexcolor" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" >"$CACHE_DIR"/matugen.log 2>&1
+    echo "$mode|$scheme_type|$prev_wall" >"$RECORD_FILE" # Updated record format
   fi
 
   # Determine reload/relaunch flag for loadreload based on action_option_set
