@@ -258,7 +258,7 @@ elif $select_wallpaper; then
   fi
 fi
 
-rm "$CACHE_DIR"/wall
+rm -f "$CACHE_DIR"/wall
 # symlink the selected wallpaper to the CACHE_DIR
 ln -s "$wall" "$CACHE_DIR"/wall
 
@@ -293,7 +293,7 @@ if { [[ $mode_option_set -ne 0 ]] || $type_option_set; } && [[ $wallpaper_option
 
   # Generate colors based on previous wallpaper and new settings
   log "Generating colors for change using previous wallpaper ($mode / $scheme_type)..."
-  "$MATUGEN" image "$wall_for_regen" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" >"$CACHE_DIR"/matugen.log 2>&1
+  "$MATUGEN" image "$wall_for_regen" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" --source-color-index 0 >"$CACHE_DIR"/matugen.log 2>&1
 
   # Update record: mode|scheme|wallpaper
   echo "$mode|$scheme_type|$wall_for_regen" >"$RECORD_FILE"
@@ -315,7 +315,7 @@ if [[ -n "$wall" ]] || [[ -n "$hexcolor" ]]; then
   log "Generating colors from new source..."
 
   if [ -n "$wall" ]; then
-    "$MATUGEN" image "$wall" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" >"$CACHE_DIR"/matugen.log 2>&1
+    "$MATUGEN" image "$wall" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" --source-color-index 0 >"$CACHE_DIR"/matugen.log 2>&1
     echo "$mode|$scheme_type|$wall" >"$RECORD_FILE" # Updated record format
   elif [ -n "$hexcolor" ]; then
     "$MATUGEN" color hex "$hexcolor" -c "$SCRIPT_DIR"/matugen/config.toml -m "$mode" -t "$scheme_type" >"$CACHE_DIR"/matugen.log 2>&1
