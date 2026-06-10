@@ -43,6 +43,10 @@ output_path = "~/.colors/generated/terminal/kitty/colors.conf"
 input_path = "./templates/terminal/alacritty/colors.toml"
 output_path = "~/.colors/generated/terminal/alacritty/colors.toml"
 
+[templates.terminalghostty]
+input_path = "./templates/terminal/ghostty/ghostty"
+output_path = "~/.colors/generated/terminal/ghostty/ghostty"
+
 # [templates.gtk3]
 # input_path = "./templates/gtk/gtk.css"
 # output_path = '~/.config/gtk-3.0/colors.css'

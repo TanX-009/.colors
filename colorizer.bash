@@ -260,6 +260,7 @@ fi
 
 rm -f "$CACHE_DIR"/wall
 # symlink the selected wallpaper to the CACHE_DIR
+log "$wall $CACHE_DIR/wall"
 ln -s "$wall" "$CACHE_DIR"/wall
 
 # Determine mode automatically if automode is set
